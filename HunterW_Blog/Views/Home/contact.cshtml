@@ -1,0 +1,172 @@
+﻿@model HunterW_Blog.Models.EmailModel
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+    <div id="page">
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div id="colorlib-logo"><a href="index.html">Stuff</a></div>
+                        </div>
+                        <div class="col-xs-10 text-right menu-1">
+                            <ul>
+                                <li><a href="@Url.Action( "Home", "Home" )">Home</a></li>
+                                <li><a href="@Url.Action( "Blog", "Home" )">Blog</a></li>
+                                <li><a href="@Url.Action( "About", "Home" )">About Me</a></li>
+                                <li class="active"><a href="@Url.Action( "Contact", "Home" )">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <aside id="colorlib-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 breadcrumbs text-center">
+                        <h2>Contact Me</h2>
+                        <h4>336.689.3495</h4>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label text-right" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.FromName, new { @class = "form-control", placeholder = "Your Name Here" })<br />
+                    @Html.ValidationMessageFor(m => m.FromName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FromEmail, new { @class = "col-md-2 control-label text-right" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.FromEmail, new { @class = "form-control", placeholder = "Your Email Adress" })<br />
+                    @Html.ValidationMessageFor(m => m.FromEmail)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Subject, new { @class = "col-md-2 control-label text-right" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Subject, new { @class = "form-control", placeholder = "Subject of Your Message" })<br />
+                    @Html.ValidationMessageFor(m => m.Subject)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Body, new { @class = "col-md-2 control-label text-right" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Body, new { @class = "form-control", placeholder = "Your Message" })<br />
+                    @Html.ValidationMessageFor(m => m.Body)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-primary" value="Send" /><br />
+                </div>
+            </div>
+        }
+
+        <footer id="colorlib-footer" role="contentinfo">
+            <div class="container">
+                <div class="row row-pb-md">
+                    <div class="col-md-3">
+                        <h2>Navigational</h2>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="#"><i class="icon-check"></i> Home</a></li>
+                                <li><a href="#"><i class="icon-check"></i> About Me</a></li>
+                                <li><a href="#"><i class="icon-check"></i> Blog</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Recent Post</h2>
+                        @*Copy/paste next 7 lines for more posts*@
+                        <div class="f-blog">
+                            <a href="blog.html" class="blog-img" style="background-image: url(~/Images/blog-1.jpg);">
+                            </a>
+                            <div class="desc">
+                                <h3><a href="blog.html">Be a designer</a></h3>
+                                <p class="admin"><span>25 March 2018</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Archive</h2>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="#"><i class="icon-check"></i> February 2018</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Tags</h2>
+                        <p class="tags">
+                            <span><a href="#"><i class="icon-tag"></i> Modeling</a></span>
+                            <span><a href="#"><i class="icon-tag"></i> Fashion</a></span>
+                            <span><a href="#"><i class="icon-tag"></i> Life</a></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <small class="block">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </small>
+                            <small class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="~/Scripts/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="~/Scripts/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="~/Scripts/jquery.flexslider-min.js"></script>
+    <!-- Owl carousel -->
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <script src="~/Scripts/magnific-popup-options.js"></script>
+    <!-- Google Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCefOgb1ZWqYtj7raVSmN4PL2WkTrc-KyA&sensor=false"></script>
+    <script src="~/Scripts/google_map.js"></script>
+    <!-- Main -->
+    <script src="~/Scripts/main.js"></script>
+
+    <script>
+        $(function () {
+            tinymce.init({
+                selector: '#editor'
+            });
+        });
+    </script>
+
+</body>
+</html>
+

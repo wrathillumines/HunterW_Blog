@@ -1,0 +1,314 @@
+﻿@model HunterW_Blog.Models.BlogPost
+@*@foreach (var item in Model)*@
+
+<!DOCTYPE HTML>
+<html>
+
+<body>
+
+    <div id="page">
+        <nav class="colorlib-nav" role="navigation">
+            <div class="top-menu">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <div id="colorlib-logo"><a href="#"></a></div>
+                        </div>
+                        <div class="col-xs-10 text-right menu-1">
+                            <ul>
+                                <li><a href="@Url.Action( "Index", "Home" )">Home</a></li>
+                                <li><a href="@Url.Action( "Blog", "Home" )">Blog</a></li>
+                                <li><a href="@Url.Action( "About", "Home" )">About Me</a></li>
+                                <li><a href="@Url.Action( "Contact", "Home" )">Contact</a></li>
+                                <li>|</li>
+                                @Html.Partial("_LoginPartial")
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <aside id="colorlib-breadcrumbs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 breadcrumbs text-center">
+                        <h2>Blog</h2>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <div id="colorlib-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 content">
+                        <div class="row row-pb-lg">
+                            <div class="col-md-12">
+                                <div class="blog-entry">
+                                    <div class="blog-img blog-detail">
+                                        <img src="~/Images/blog-4.jpg" class="img-responsive" alt="html5 bootstrap template">
+                                    </div>
+                                    <div class="desc">
+                                        <p class="meta">
+                                            <span class="date">@*@Html.DisplayFor(model => model.Created.ToString("mm/dd/yyyy"))*@</span>
+                                            <span class="pos">By <a href="#">Hunter</a></span>
+                                        </p>
+                                        <h2>@*@Html.DisplayFor(model => model.Title.ToString())*@</h2>
+                                        <p>So, I'm two weeks in. Two weeks into my career as a coder. Two weeks of training is behind me. If you had asked me a year ago what I'd be doing now, I wouldn't have had an answer. And yet, here I am. </p>
+                                        <p>I always told myself that I wouldn't enter a career in which I sat at a desk using a computer most of the day, but as I grew and tried other things, this seemed to be the best choice. It feels good to have some direction in my life, but I have to remember that I can't just coast through. This is the real world, and I've got to apply myself. </p>
+                                        <p>There will be good times and others that aren't so good, but I believe that trying to stay optimistic is important. If one loses hope, continuing forward becomes much more difficult. I plan to keep my head up as much as possible. After all, I've already made it this far. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @*<div class="row row-pb-lg">
+                            <div class="col-md-12">
+                                <div class="blog-entry">
+                                    <div class="blog-img blog-detail">
+                                        <img src="images/blog-4.jpg" class="img-responsive" alt="html5 bootstrap template">
+                                    </div>
+                                    <div class="desc">
+                                        <p class="meta">
+                                            <span class="date">21 July 2019</span>
+                                            <span class="pos">By <a href="#">Hunter</a></span>
+                                        </p>
+                                        <h2><a href="blog.html">
+                                            Genesis
+                                            </a></h2>
+                                        <p>So, I'm two weeks in. Two weeks into my career as a coder. Two weeks of training is behind me. If you had asked me a year ago what I'd be doing now, I wouldn't have had an answer. And yet, here I am. </p>
+                                        <p>I always told myself that I wouldn't enter a career in which I sat at a desk using a computer most of the day, but as I grew and tried other things, this seemed to be the best choice. It feels good to have some direction in my life, but I have to remember that I can't just coast through. This is the real world, and I've got to apply myself. </p>
+                                        <p>There will be good times and others that aren't so good, but I believe that trying to stay optimistic is important. If one loses hope, continuing forward becomes much more difficult. I plan to keep my head up as much as possible. After all, I've already made it this far. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                            ^^^My Post^^^
+
+                        @<div class="row row-pb-lg">
+                            <div class="col-md-12">
+                                <h2 class="heading-2">0 Comments</h2>
+                                <div class="review">
+                                    <div class="user-img" style="background-image: url(images/person1.jpg)"></div>
+                                    <div class="desc">
+                                        <h4>
+                                            <span class="text-left">Jacob Webb</span>
+                                            <span class="text-right">24 March 2018</span>
+                                        </h4>
+                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                        <p class="star">
+                                            <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="review">
+                                    <div class="user-img" style="background-image: url(images/person2.jpg)"></div>
+                                    <div class="desc">
+                                        <h4>
+                                            <span class="text-left">Jacob Webb</span>
+                                            <span class="text-right">24 March 2018</span>
+                                        </h4>
+                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                        <p class="star">
+                                            <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="review">
+                                    <div class="user-img" style="background-image: url(images/person3.jpg)"></div>
+                                    <div class="desc">
+                                        <h4>
+                                            <span class="text-left">Jacob Webb</span>
+                                            <span class="text-right">24 March 2018</span>
+                                        </h4>
+                                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                        <p class="star">
+                                            <span class="text-left"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="heading-2">Say something</h2>
+                                <form action="#">
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <!-- <label for="fname">First Name</label> -->
+                                            <input type="text" id="fname" class="form-control" placeholder="Your firstname">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <!-- <label for="lname">Last Name</label> -->
+                                            <input type="text" id="lname" class="form-control" placeholder="Your lastname">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <!-- <label for="email">Email</label> -->
+                                            <input type="text" id="email" class="form-control" placeholder="Your email address">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <!-- <label for="subject">Subject</label> -->
+                                            <input type="text" id="subject" class="form-control" placeholder="Your subject of this message">
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <!-- <label for="message">Message</label> -->
+                                            <textarea name="message" id="message" cols="30" rows="10" class="form-control" placeholder="Say something about us"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Post Comment" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="sidebar">
+                            <div class="side">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="search" placeholder="Enter any key to search...">
+                                    <button type="submit" class="btn btn-primary"><i class="icon-search3"></i></button>
+                                </div>
+                            </div>
+                            <div class="side">
+                                <h2 class="sidebar-heading">Categories</h2>
+                                <p>
+                                    <ul class="category">
+                                        <li><a href="#"><i class="icon-check"></i> Home</a></li>
+                                        <li><a href="#"><i class="icon-check"></i> About Me</a></li>
+                                        <li><a href="#"><i class="icon-check"></i> Blog</a></li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class="side">
+                                <h2 class="sidebar-heading">Recent Blog Posts</h2>
+                                <div class="f-blog">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(/Images/blog-1.jpg);">
+                                    </a>
+                                    <div class="desc">
+                                        <h3><a href="blog.html">Genesis</a></h3>
+                                        <p class="admin"><span>21 July 2019</span></p>
+                                    </div>
+                                </div>
+                                @*<div class="f-blog">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(images/blog-2.jpg);">
+                                    </a>
+                                    <div class="desc">
+                                        <h3><a href="blog.html">How to build website</a></h3>
+                                        <p class="admin"><span>24 March 2018</span></p>
+                                    </div>
+                                </div>
+                                <div class="f-blog">
+                                    <a href="blog.html" class="blog-img" style="background-image: url(images/blog-3.jpg);">
+                                    </a>
+                                    <div class="desc">
+                                        <h3><a href="blog.html">Create website</a></h3>
+                                        <p class="admin"><span>23 March 2018</span></p>
+                                    </div>
+                                </div>*@
+                            </div>
+
+                            <div class="side">
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-email text-center" id="email" placeholder="Enter your email">
+                                    <button type="submit" class="btn btn-primary btn-subscribe">Subscribe</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer id="colorlib-footer" role="contentinfo">
+            <div class="container">
+                <div class="row row-pb-md">
+                    <div class="col-md-3">
+                        <h2>Navigational</h2>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="#"><i class="icon-check"></i> Home</a></li>
+                                <li><a href="#"><i class="icon-check"></i> About Me</a></li>
+                                <li><a href="#"><i class="icon-check"></i> Blog</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Recent Blog Posts</h2>
+                        <div class="f-blog">
+                            <a href="blog.html" class="blog-img" style="background-image: url(/Images/blog-1.jpg);">
+                            </a>
+                            <div class="desc">
+                                <h3><a href="blog.html">Genesis</a></h3>
+                                <p class="admin"><span>21 July 2019</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <h2>Archive</h2>
+                        <p>
+                            <ul class="colorlib-footer-links">
+                                <li><a href="#"><i class="icon-check"></i> July 2019</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    @*<div class="col-md-3">
+                        <h2>Tags</h2>
+                        <p class="tags">
+                            <span><a href="#"><i class="icon-tag"></i> Learning</a></span>
+                            <span><a href="#"><i class="icon-tag"></i> JavaScript</a></span>
+                            <span><a href="#"><i class="icon-tag"></i> C Sharp</a></span>
+                        </p>
+                    </div>*@
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>
+                            <small class="block">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template was made by <a href="https://colorlib.com" target="_blank">Colorlib</a> and has been modified by Hunter Williams.
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="js/jquery.flexslider-min.js"></script>
+    <!-- Owl carousel -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+    <!-- Main -->
+    <script src="js/main.js"></script>
+
+</body>
+</html>
+
