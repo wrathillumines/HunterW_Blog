@@ -1,4 +1,5 @@
 ﻿using HunterW_Blog.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,11 +12,32 @@ using System.Web.Mvc;
 
 namespace HunterW_Blog.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Index(int? page, string searchStr)
         {
-            return View();
+            //var publishedBlogPosts = db.BlogPosts.Where(b => b.Published).OrderByDescending(b => b.Created);
+            int pageSize = 3; //display x number of blog posts at a time on this page
+            int pageNumber = (page ?? 1);
+            return View(db.BlogPosts.Where(b => b.Published).OrderByDescending(b => b.Created).ToPagedList(pageNumber, pageSize));
+            //return View(publishedBlogPosts.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return View("index")/*new HttpStatusCodeResult(HttpStatusCode.BadRequest)*/;
+            }
+            BlogPost blogPost = db.BlogPosts.Find(id);
+            if (blogPost == null)
+            {
+                return HttpNotFound();
+            }
+            return View(blogPost);
         }
 
         public ActionResult Contact()

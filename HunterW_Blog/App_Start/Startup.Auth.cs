@@ -54,9 +54,9 @@ namespace HunterW_Blog
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "416301965648851",
+               appSecret: "b8e81b82d8db27bf2362c4663a0044f7");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

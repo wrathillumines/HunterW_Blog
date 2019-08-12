@@ -1,82 +1,101 @@
-﻿@model HunterW_Blog.Models.BlogPost
+﻿<!DOCTYPE html>
+@model HunterW_Blog.Models.BlogPost
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<html>
 
-<div>
-    <h4>BlogPost</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<body>
+    <aside id="colorlib-breadcrumbs">
+        <div class="container">
+            <div class="row">
+				<div class="col-md-12 text-center">
+					<h2>@Html.DisplayFor(model => model.Title)</h2>
+					<h4>Written on @Html.DisplayFor(model => model.Created)</h4>
+					@*<h4>Created @Html.DisplayFor(model => model.Created.ToString("MMMM dd, yyyy"))</h4>*@
+				</div>
+            </div>
+        </div>
+    </aside>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+    <div id="colorlib-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="blog-entry">
+                        <div class="blog-img blog-detail">
+                            @*<img src="@MediaUrl" class="img-responsive" alt="html5 bootstrap template">*@
+                            @if (Model.MediaUrl != "")
+                            {
+                                <div class="result">
+                                    <img src="@Model.MediaUrl" alt="image" />
+                                </div>
+                            }
+                        </div>
+                        <div class="desc">
+                            <!-- BLOG POST BODY -->
+                            @Html.DisplayFor(model => model.Body)
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="heading-2">Say Something</h2>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Abstract)
-        </dt>
+                            @*leave comments*@
 
-        <dd>
-            @Html.DisplayFor(model => model.Abstract)
-        </dd>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("slug", Model.Slug)
+                                    @Html.Hidden("BlogPostId", Model.Id)
+                                    @Html.TextArea("CommentBody", new { htmlAttributes = new { @style = "width: 100%; max-width: 100%", @placeholder = "Is this thing on?" } })
+                                    <button type="submit" class="btn btn-primary text-center">Leave Comment</button>
+                                }
+                            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
+                            @*display comments*@
 
-        <dd>
-            @Html.DisplayFor(model => model.Slug)
-        </dd>
+                            @foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+                            {
+                                <hr />
+                                <div class="row">
+                                    <h4>Comment from @comment.Author.Email on @comment.Created.ToString("MMMM d, yy") at @comment.Created.ToString("h:mm tt")</h4>
+                                </div>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @comment.Body
+                                        <hr />
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            using (Html.BeginForm("Edit", "Comments", FormMethod.Get))
+                                            {
+                                                @*@Html.ActionLink("Edit", "Edit")*@
+                                                @*@Html.Hidden("slug", Model.Slug)*@
+                                                @Html.Hidden("Id", comment.Id)
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Body)
-        </dt>
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Body)
-        </dd>
+</body>
+</html>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MediaUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MediaUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Published)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Published)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

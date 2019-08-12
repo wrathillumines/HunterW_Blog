@@ -49,7 +49,7 @@ namespace HunterW_Blog.Migrations
                 }, "dog2ape");
             }
 
-            if (!context.Users.Any(u => u.Email == "hunterwilliams@northstate.net"))
+            if (!context.Users.Any(u => u.Email == "coderfoundry@mailinator.com"))
             {
                 userManager.Create(new ApplicationUser
                 {

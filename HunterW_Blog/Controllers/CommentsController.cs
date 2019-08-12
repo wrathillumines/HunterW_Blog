@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using HunterW_Blog.Models;
+using Microsoft.AspNet.Identity;
 
 namespace HunterW_Blog.Controllers
 {
+    [RequireHttps]
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -17,7 +16,7 @@ namespace HunterW_Blog.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            var comments = db.Comments.Include(c => c.Author).Include(c => c.BlogPost);
+            var comments = db.Comments.Include(c => c.Author).Include(c => c.BlogPostId);
             return View(comments.ToList());
         }
 
@@ -40,7 +39,7 @@ namespace HunterW_Blog.Controllers
         public ActionResult Create()
         {
             ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName");
-            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title");
+            ViewBag.blogpost = new SelectList(db.BlogPosts, "Id", "Title");
             return View();
         }
 
@@ -49,17 +48,18 @@ namespace HunterW_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BlogPostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Create([Bind(Include = "BlogPostId")] Comment comment, string CommentBody, string slug)
         {
             if (ModelState.IsValid)
             {
+                comment.Body = CommentBody;
+                comment.AuthorId = User.Identity.GetUserId();
+                comment.Created = DateTimeOffset.Now;
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("index");
+                return RedirectToAction("Details", "BlogPosts", new { slug = slug });
             }
-
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
             return View(comment);
         }
 
@@ -75,8 +75,6 @@ namespace HunterW_Blog.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
             return View(comment);
         }
 
@@ -85,17 +83,17 @@ namespace HunterW_Blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BlogPostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment)
+        public ActionResult Edit([Bind(Include = "Body,UpdateReason")] Comment comment, int Id, string CommentBody, string slug)
         {
             if (ModelState.IsValid)
             {
+                comment.Id = Id;
+                comment.Body = CommentBody;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
-            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
-            return View(comment);
+            return RedirectToAction("Details", "BlogPosts", new { slug = slug });
         }
 
         // GET: Comments/Delete/5

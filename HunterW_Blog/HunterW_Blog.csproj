@@ -193,6 +193,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907270120408_Initial.cs" />
+    <Compile Include="Migrations\201907270120408_Initial.Designer.cs">
+      <DependentUpon>201907270120408_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BlogPost.cs" />
@@ -224,6 +228,8 @@
     <Content Include="fonts\icomoon\icomoon.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\about-me-img.jpg" />
+    <Content Include="Images\about-me-imgsmall.jpg" />
     <Content Include="Images\author.jpg" />
     <Content Include="Images\blog-1.jpg" />
     <Content Include="Images\blog-10.jpg" />
@@ -238,6 +244,7 @@
     <Content Include="Images\blog-7.jpg" />
     <Content Include="Images\blog-8.jpg" />
     <Content Include="Images\blog-9.jpg" />
+    <Content Include="Images\contact-img.jpg" />
     <Content Include="Images\gallery-1.jpg" />
     <Content Include="Images\gallery-2.jpg" />
     <Content Include="Images\gallery-3.jpg" />
@@ -246,6 +253,8 @@
     <Content Include="Images\gallery-6.jpg" />
     <Content Include="Images\gallery-7.jpg" />
     <Content Include="Images\gallery-8.jpg" />
+    <Content Include="Images\hw100square.jpg" />
+    <Content Include="Images\hw32px.ico" />
     <Content Include="Images\img_bg_1.jpg" />
     <Content Include="Images\img_bg_2.jpg" />
     <Content Include="Images\img_bg_3.jpg" />
@@ -410,9 +419,12 @@
     <Content Include="Scripts\tinymce\themes\silver\theme.min.js" />
     <Content Include="Scripts\tinymce\tinymce.js" />
     <Content Include="Scripts\tinymce\tinymce.min.js" />
+    <Content Include="Uploads\about-me-img.jpg" />
+    <Content Include="Uploads\beach.jpg" />
+    <Content Include="Uploads\contact-img.jpg" />
+    <Content Include="Uploads\shell.jpg" />
     <Content Include="Views\BlogPosts\Create.cshtml" />
     <Content Include="Views\BlogPosts\Delete.cshtml" />
-    <Content Include="Views\BlogPosts\Details.cshtml" />
     <Content Include="Views\BlogPosts\Edit.cshtml" />
     <Content Include="Views\BlogPosts\Index.cshtml" />
     <Content Include="Views\Comments\Create.cshtml" />
@@ -423,12 +435,10 @@
     <Content Include="Views\Account\ResendEmailConfirmation.cshtml" />
     <Content Include="Views\Account\ConfirmationSent.cshtml" />
     <Content Include="Views\Home\about.cshtml" />
-    <Content Include="Views\Home\blog.cshtml" />
+    <Content Include="Views\Home\theoldblog.cshtml" />
     <Content Include="Views\Home\contact.cshtml" />
-    <Content Include="Views\Home\event.cshtml" />
     <Content Include="Views\Home\index.cshtml" />
-    <Content Include="Views\Home\single.cshtml" />
-    <Content Include="Views\Home\travel.cshtml" />
+    <Content Include="Views\BlogPosts\Details.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -466,10 +476,11 @@
     <Content Include="Scripts\tinymce\skins\ui\oxide\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\skins\ui\oxide-dark\fonts\tinymce-mobile.woff" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
+    <Content Include="Views\BlogPosts\CreatedDate.cshtml" />
+    <Content Include="Views\BlogPosts\AdminControls.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -483,6 +494,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201907270120408_Initial.resx">
+      <DependentUpon>201907270120408_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

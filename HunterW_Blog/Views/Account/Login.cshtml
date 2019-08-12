@@ -1,33 +1,13 @@
-﻿@using HunterW_Blog.Models
+﻿<!DOCTYPE html>
+
+@using HunterW_Blog.Models
 @model LoginViewModel
 @{
     ViewBag.Title = "Log in";
 }
 
-<nav class="colorlib-nav" role="navigation">
-    <div class="top-menu">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-2">
-                    <div id="colorlib-logo"><a href="index.html">Log In</a></div>
-                </div>
-                <div class="col-xs-10 text-right menu-1">
-                    <ul>
-                        <li><a href="@Url.Action( "Index", "Home" )">Home</a></li>
-                        <li><a href="@Url.Action( "Blog", "Home" )">Blog</a></li>
-                        <li><a href="@Url.Action( "About", "Home" )">About Me</a></li>
-                        <li><a href="@Url.Action( "Contact", "Home" )">Contact</a></li>
-                        <li>|</li>
-                        @Html.Partial("_LoginPartial")
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
-
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-6">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
@@ -59,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <input type="submit" value="Log in" class="btn btn-primary" />
                     </div>
                 </div>
                 <p class="text-center">
@@ -71,11 +51,11 @@
             }
         </section>
     </div>
-    @*<div class="col-md-4">
+    <div class="col-md-6">
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
-    </div>*@
+    </div>
 </div>
 
 @Scripts.Render("~/bundles/jqueryval")

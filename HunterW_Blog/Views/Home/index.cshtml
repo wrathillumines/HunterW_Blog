@@ -1,35 +1,18 @@
-﻿@model IEnumerable<HunterW_Blog.Models.BlogPost>
+﻿<!DOCTYPE HTML>
 
-<!DOCTYPE HTML>
-<html>
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<HunterW_Blog.Models.BlogPost>
+
+@{
+    ViewBag.Title = "Index";
+}
+
 
 <body>
 
     <div id="page">
-
-        <!-- NAV BAR -->
-
-        <nav class="colorlib-nav" role="navigation">
-            <div class="top-menu">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-2">
-                            <div id="colorlib-logo"><a href="#"></a></div>
-                        </div>
-                        <div class="col-xs-10 text-right menu-1">
-                            <ul>
-                                <li class="active"><a href="@Url.Action( "Home", "Index" )">Home</a></li>
-                                <li><a href="@Url.Action( "Blog", "Home" )">Blog</a></li>
-                                <li><a href="@Url.Action( "About", "Home" )">About Me</a></li>
-                                <li><a href="@Url.Action( "Contact", "Home" )">Contact</a></li>
-                                <li>|</li>
-                                @Html.Partial("_LoginPartial")
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
 
         <!-- MAIN SECTION OF PAGE -->
 
@@ -44,7 +27,7 @@
                                     <div class="slider-text-inner">
                                         <div class="desc">
                                             <p class="meta">
-                                                <span class="cat"><a href="#">View My Blog</a></span>
+                                                <span class="cat"><a href="~/BlogPosts/Index">View My Blog</a></span>
                                             </p>
                                             <h1>My thoughts, ideas, mishaps, and happy accidents in web development</h1>
                                         </div>
@@ -61,7 +44,7 @@
                                     <div class="slider-text-inner">
                                         <div class="desc">
                                             <p class="meta">
-                                                <span class="cat"><a href="#">About Me</a></span>
+                                                <span class="cat"><a href="~/Home/About">About Me</a></span>
                                             </p>
                                             <h1>My name's Hunter...but who am I, really?</h1>
                                         </div>
@@ -78,7 +61,7 @@
                                     <div class="slider-text-inner">
                                         <div class="desc">
                                             <p class="meta">
-                                                <span class="cat"><a href="#">Contact Me</a></span>
+                                                <span class="cat"><a href="~/Home/Contact">Contact Me</a></span>
                                             </p>
                                             <h1>Drop me a line</h1>
                                         </div>
@@ -91,145 +74,44 @@
             </div>
         </aside>
 
-        <!-- POSTS -->
-
-        <div id="colorlib-container">
-            <div class="container">
-                <div class="row row-pb-md">
-                    <div class="col-md-4">
-                        <div class="blog-entry">
-                            <div class="blog-img">
-                                <a href="blog.html">
-                                    <img src="/Images/blog-1.jpg" class="img-responsive" alt="html5 bootstrap template">
-                                </a>
-                            </div>
-                            <div class="desc">
-                                <p class="meta">
-                                    <span class="cat"><a href="#">Blog</a></span>
-                                    <span class="date">21 July 2019</span>
-                                    <span class="pos">By <a href="#">Hunter</a></span>
-                                </p>
-                                <h2><a href="blog.html">Genesis</a></h2>
-                                <p>The Beginning of my Coding Career </p>
-                            </div>
-                        </div>
-                    </div>
-                    @*<div class="col-md-4">
-                        <div class="blog-entry">
-                            <div class="blog-img">
-                                <a href="blog.html"><img src="/Images/blog-2.jpg" class="img-responsive" alt="html5 bootstrap template"></a>
-                            </div>
-                            <div class="desc">
-                                <p class="meta">
-                                    <span class="cat"><a href="#">Read</a></span>
-                                    <span class="date">20 March 2018</span>
-                                    <span class="pos">By <a href="#">Rich</a></span>
-                                </p>
-                                <h2><a href="blog.html">Recipe for your site</a></h2>
-                                <p>A small river named Duden flows by their place and supplies it with the necessary </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="blog-entry">
-                            <div class="blog-slider">
-                                <div class="owl-carousel">
-                                    <div class="item">
-                                        <a href="blog.html" class="image-popup-link"><img src="/Images/blog-3.jpg" class="img-responsive" alt="html5 bootstrap template"></a>
-                                    </div>
-                                    <div class="item">
-                                        <a href="blog.html" class="image-popup-link"><img src="/Images/blog-4.jpg" class="img-responsive" alt="html5 bootstrap template"></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="desc">
-                                <p class="meta">
-                                    <span class="cat"><a href="#">Travel</a></span>
-                                    <span class="date">20 March 2018</span>
-                                    <span class="pos">By <a href="#">Rich</a></span>
-                                </p>
-                                <h2><a href="blog.html">Recipe for your site</a></h2>
-                                <p>A small river named Duden flows by their place and supplies it with the necessary </p>
-                            </div>
-                        </div>
-                    </div>*@
-                </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <br />
+                <h3>
+                    Recent Posts
+                </h3>
             </div>
         </div>
+		<div class="row">
+			@foreach (var item in Model)
+			{
+				<div class="col-xs-4 text-center">
+					<div class="row">
+						<h4>
+						@Html.DisplayFor(modelItem => item.Title)
+						</h4>
+					</div>
+					<div class="row">
+						<p>
+							@Html.DisplayFor(modelItem => item.Abstract)
+						</p>
+					</div>
+					<div class="row">
+						<h4>
+							@Html.ActionLink("Read Post", "Details", "BlogPosts", new { slug = item.Slug }, null)
+						</h4>
+					</div>
+				</div>
+			}
+		</div>
+        <center>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @(Model.PageCount)
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </center>
 
         <!-- FOOTER -->
 
-        <footer id="colorlib-footer" role="contentinfo">
-            <div class="container">
-                <div class="row row-pb-md">
-                    <div class="col-md-4">
-                        <h2>Navigational</h2>
-                        <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#"><i class="icon-check"></i> Home</a></li>
-                                <li><a href="#"><i class="icon-check"></i> About Me</a></li>
-                                <li><a href="#"><i class="icon-check"></i> Blog</a></li>
-                            </ul>
-                        </p>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Recent Post</h2>
-                        <div class="f-blog">
-                            <a href="blog.html" class="blog-img" style="background-image: url(/Images/blog-1.jpg);">
-                            </a>
-                            <div class="desc">
-                                <h3><a href="blog.html">Genesis</a></h3>
-                                <p class="admin"><span>21 July 2019</span></p>
-                            </div>
-                        </div>
-                        @*<div class="f-blog">
-                            <a href="blog.html" class="blog-img" style="background-image: url(/Images/blog-2.jpg);">
-                            </a>
-                            <div class="desc">
-                                <h3><a href="blog.html">How to build website</a></h3>
-                                <p class="admin"><span>24 March 2018</span></p>
-                            </div>
-                        </div>
-                        <div class="f-blog">
-                            <a href="blog.html" class="blog-img" style="background-image: url(/Images/blog-3.jpg);">
-                            </a>
-                            <div class="desc">
-                                <h3><a href="blog.html">Create website</a></h3>
-                                <p class="admin"><span>23 March 2018</span></p>
-                            </div>
-                        </div>*@
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Archive</h2>
-                        <p>
-                            <ul class="colorlib-footer-links">
-                                <li><a href="#"><i class="icon-check"></i> July 2019</a></li>
-                            </ul>
-                        </p>
-                    </div>
-                    @*<div class="col-md-3">
-                        <h2>Tags</h2>
-                        <p class="tags">
-                            <span><a href="#"><i class="icon-tag"></i> Learning</a></span>
-                            <span><a href="#"><i class="icon-tag"></i> JavaScript</a></span>
-                            <span><a href="#"><i class="icon-tag"></i> C Sharp</a></span>
-                        </p>
-                    </div>*@
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>
-                            <small class="block">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script> All rights reserved | This template was made by <a href="https://colorlib.com" target="_blank">Colorlib</a> and has been modified by Hunter Williams.
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            </small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </footer>
+
     </div>
 
     <div class="gototop js-top">
@@ -255,5 +137,4 @@
     <script src="~/Scripts/main.js"></script>
 
 </body>
-</html>
 

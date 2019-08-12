@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MediaUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MediaUrl, new { htmlAttributes = new { @class = "form-control" } })
+                <input name="image" type="file" id="fileUpload" />
                 @Html.ValidationMessageFor(model => model.MediaUrl, "", new { @class = "text-danger" })
             </div>
         </div>

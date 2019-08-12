@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace HunterW_Blog.Models
@@ -10,9 +11,10 @@ namespace HunterW_Blog.Models
         public string Title { get; set; }
         public string Abstract { get; set; }
         public string Slug { get; set; }
-        [AllowHtml] public string Body { get; set; }
+        public string Body { get; set; }
         public string MediaUrl { get; set; }
         public bool Published { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MMMM d, yyyy}", ApplyFormatInEditMode = true)]
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
 
