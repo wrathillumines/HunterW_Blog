@@ -151,21 +151,26 @@ namespace HunterW_Blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName, FirstName = model.FirstName, LastName = model.LastName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     var emailFrom = WebConfigurationManager.AppSettings["emailfrom"];
-                    var email = new MailMessage(emailFrom, model.Email)
+                    MailMessage mailMessage = new MailMessage(emailFrom, model.Email)
                     {
                         Subject = "Confirm your account",
-                        Body = "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>",
+                        Body = "<p><span style=\"font-family: arial;\">Thank you for registering.</span></p><p><span style=\"font-family: arial;\">Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.</span></p>",
                         IsBodyHtml = true
                     };
+
+                    var service = new PersonalEmail();
+                    await service.SendAsync(mailMessage);
+
+                    return RedirectToAction("EmailConfirmationSent", "Account");
                 }
                 AddErrors(result);
             }
@@ -185,6 +190,14 @@ namespace HunterW_Blog.Controllers
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
+        }
+
+        //
+        // GET: /Account/EmailConfirmationSent
+        [AllowAnonymous]
+        public ActionResult EmailConfirmationSent()
+        {
+            return View();
         }
 
         //

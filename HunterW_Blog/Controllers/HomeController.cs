@@ -96,7 +96,7 @@ namespace HunterW_Blog.Controllers
                     var svc = new PersonalEmail();
                     await svc.SendAsync(email);
 
-                    return View(new EmailModel());
+                    return RedirectToAction("Sent");
                 }
                 catch (Exception ex)
                 {
@@ -105,6 +105,11 @@ namespace HunterW_Blog.Controllers
                 }
             }
             return View(model);
+        }
+
+        public ActionResult Sent()
+        {
+            return View();
         }
     }
 }

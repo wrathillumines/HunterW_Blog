@@ -22,6 +22,7 @@
             @Html.AntiForgeryToken()
 
             @Html.ValidationSummary("", new { @class = "text-danger" })
+			<br />
 			<div class="row">
 				<div class="form-group">
 					@Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label text-right" })
@@ -53,7 +54,7 @@
 				<div class="form-group">
 					@Html.LabelFor(m => m.Body, new { @class = "col-md-2 control-label text-right" })
 					<div class="col-md-8">
-						@Html.TextBoxFor(m => m.Body, new { @class = "form-control", placeholder = "Your Message" })<br />
+						@Html.TextAreaFor(m => m.Body, new { @class = "form-control", placeholder = "Your Message", rows = 5 })<br />
 						@Html.ValidationMessageFor(m => m.Body)
 					</div>
 				</div>
@@ -62,6 +63,7 @@
 				<div class="form-group">
 					<div class="col-md-offset-2 col-md-8">
 						<input type="submit" class="btn btn-primary" value="Send" /><br />
+						<br />
 					</div>
 				</div>
 			</div>

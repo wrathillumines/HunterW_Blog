@@ -1,100 +1,138 @@
 ﻿<!DOCTYPE html>
 @model HunterW_Blog.Models.BlogPost
+@using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "Details";
+	ViewBag.Title = "Details";
 }
 
 <html>
 
 <body>
-    <aside id="colorlib-breadcrumbs">
-        <div class="container">
-            <div class="row">
+	<aside id="colorlib-breadcrumbs">
+		<div class="container">
+			<div class="row">
 				<div class="col-md-12 text-center">
 					<h2>@Html.DisplayFor(model => model.Title)</h2>
 					<h4>Written on @Html.DisplayFor(model => model.Created)</h4>
 					@*<h4>Created @Html.DisplayFor(model => model.Created.ToString("MMMM dd, yyyy"))</h4>*@
 				</div>
-            </div>
-        </div>
-    </aside>
+			</div>
+		</div>
+	</aside>
 
-    <div id="colorlib-container">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="blog-entry">
-                        <div class="blog-img blog-detail">
-                            @*<img src="@MediaUrl" class="img-responsive" alt="html5 bootstrap template">*@
-                            @if (Model.MediaUrl != "")
-                            {
-                                <div class="result">
-                                    <img src="@Model.MediaUrl" alt="image" />
-                                </div>
-                            }
-                        </div>
-                        <div class="desc">
-                            <!-- BLOG POST BODY -->
-                            @Html.DisplayFor(model => model.Body)
-                        </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2 class="heading-2">Say Something</h2>
+	<div id="colorlib-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<div class="blog-entry">
+						<div class="blog-img blog-detail">
+							@*<img src="@MediaUrl" class="img-responsive" alt="html5 bootstrap template">*@
+							@if (Model.MediaUrl != "")
+							{
+								<div class="result">
+									<img src="@Model.MediaUrl" alt="image" />
+								</div>
+							}
+						</div>
+						<div class="desc">
+							<!-- BLOG POST BODY -->
+							@Html.DisplayFor(model => model.Body)
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-md-12">
 
-                            @*leave comments*@
+							@if (User.Identity.IsAuthenticated)
+							{
+								<h2 class="heading-2">Say Something</h2>
+							}
+							else
+							{
+								<h3>Log in or register to leave a comment.</h3>
+							}
 
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("Create", "Comments", FormMethod.Post))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    @Html.Hidden("slug", Model.Slug)
-                                    @Html.Hidden("BlogPostId", Model.Id)
-                                    @Html.TextArea("CommentBody", new { htmlAttributes = new { @style = "width: 100%; max-width: 100%", @placeholder = "Is this thing on?" } })
-                                    <button type="submit" class="btn btn-primary text-center">Leave Comment</button>
-                                }
-                            }
+							@*<h2 class="heading-2">Say Something</h2>*@
 
-                            @*display comments*@
+							@*leave comments*@
 
-                            @foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
-                            {
-                                <hr />
-                                <div class="row">
-                                    <h4>Comment from @comment.Author.Email on @comment.Created.ToString("MMMM d, yy") at @comment.Created.ToString("h:mm tt")</h4>
-                                </div>
-                                <hr />
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        @comment.Body
-                                        <hr />
-                                        @if (User.Identity.IsAuthenticated)
-                                        {
-                                            using (Html.BeginForm("Edit", "Comments", FormMethod.Get))
-                                            {
-                                                @*@Html.ActionLink("Edit", "Edit")*@
-                                                @*@Html.Hidden("slug", Model.Slug)*@
-                                                @Html.Hidden("Id", comment.Id)
-                                                <button type="submit" class="btn btn-primary">Edit</button>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                                <hr />
-                            }
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+							@if (User.Identity.IsAuthenticated)
+							{
+								using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+								{
+									@Html.AntiForgeryToken()
+									@Html.Hidden("slug", Model.Slug)
+									@Html.Hidden("BlogPostId", Model.Id)
+									@Html.TextArea("CommentBody", new { @class = "form-control" })
+									<br />
+									<button type="submit" class="btn btn-primary text-center">Leave Comment</button>
+								}
+							}
 
-    <div class="gototop js-top">
-        <a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
-    </div>
+							@*display comments*@
+
+							@foreach (var comment in Model.Comments.OrderByDescending(c => c.Created))
+							{
+								<hr />
+								<div class="row">
+									<div class="col-md-4">
+										<div class="row">
+											<div class="col-md-12">
+												<h4>Comment from @comment.Author.DisplayName</h4>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<h5>@comment.Created.ToString("MMMM d, yy")</h5>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<h5>@comment.Created.ToString("h:mm tt")</h5>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-8">
+										<div class="row">
+											<div class="col-md-10">
+												@comment.Body
+											</div>
+											<div class="col-md-2">
+												@if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.Identity.GetUserId() == comment.AuthorId)
+												{
+													using (Html.BeginForm("Edit", "Comments", FormMethod.Get))
+													{
+														@Html.Hidden("Created", comment.Created)
+														@Html.Hidden("AuthorId", comment.AuthorId)
+														@Html.Hidden("Id", comment.Id)
+														@Html.Hidden("slug", Model.Slug)
+														<button type="submit" class="btn btn-primary">Edit</button>
+													}
+													using (Html.BeginForm("Delete", "Comments", FormMethod.Post))
+													{
+														@Html.Hidden("Id", comment.Id)
+														@Html.Hidden("slug", Model.Slug)
+														@Html.AntiForgeryToken()
+														<button type="submit" class="btn btn-primary">Delete</button>
+													}
+												}
+											</div>
+										</div>
+									</div>
+								</div>
+								<hr />
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up2"></i></a>
+	</div>
 
 </body>
 </html>

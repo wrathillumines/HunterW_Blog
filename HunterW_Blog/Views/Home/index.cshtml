@@ -82,27 +82,27 @@
                 </h3>
             </div>
         </div>
-		<div class="row">
-			@foreach (var item in Model)
-			{
-				<div class="col-xs-4 text-center">
-					<div class="row">
-						<h4>
-						@Html.DisplayFor(modelItem => item.Title)
-						</h4>
-					</div>
-					<div class="row">
-						<p>
-							@Html.DisplayFor(modelItem => item.Abstract)
-						</p>
-					</div>
-					<div class="row">
-						<h4>
-							@Html.ActionLink("Read Post", "Details", "BlogPosts", new { slug = item.Slug }, null)
-						</h4>
-					</div>
+
+		<div id="colorlib-container">
+            <div class="container">
+                <div class="row row-pb-md">
+					@foreach (var item in Model)
+					{
+						<div class="col-md-4">
+							<div class="blog-entry">
+								<div class="desc">
+									<p class="meta">
+										<span class="date">@Html.DisplayFor(modelItem => item.Created)</span>
+										<span class="pos">By <a href="/Home/About">Hunter</a></span>
+									</p>
+									<h2>@Html.ActionLink(item.Title, "Details", "BlogPosts", new { slug = item.Slug }, null)</h2>
+									<p>@Html.DisplayFor(modelItem => item.Abstract)</p>
+								</div>
+							</div>
+						</div>
+					}
 				</div>
-			}
+			</div>
 		</div>
         <center>
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @(Model.PageCount)

@@ -75,25 +75,33 @@ namespace HunterW_Blog.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
             return View(comment);
         }
 
-        // POST: Comments/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Comments/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Body,UpdateReason")] Comment comment, int Id, string CommentBody, string slug)
+        [AllowAnonymous]
+        public ActionResult Edit([Bind(Include = "Id,BlogPostId,AuthorId,Body,Created,Updated,UpdateReason")] Comment comment, string slug)
         {
+            if (string.IsNullOrEmpty(comment.UpdateReason))
+            {
+                ModelState.AddModelError("UpdateReason", "Please provide a reason for editing this post.");
+                comment.BlogPost = db.BlogPosts.AsNoTracking().FirstOrDefault(b => b.Id == comment.BlogPostId);
+                return View(comment);
+            }
             if (ModelState.IsValid)
             {
-                comment.Id = Id;
-                comment.Body = CommentBody;
+                comment.Updated = DateTimeOffset.Now;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "BlogPosts", new { slug = slug });
             }
-            return RedirectToAction("Details", "BlogPosts", new { slug = slug });
+            ViewBag.AuthorId = new SelectList(db.Users, "Id", "FirstName", comment.AuthorId);
+            ViewBag.BlogPostId = new SelectList(db.BlogPosts, "Id", "Title", comment.BlogPostId);
+            return View(comment);
         }
 
         // GET: Comments/Delete/5
@@ -114,12 +122,12 @@ namespace HunterW_Blog.Controllers
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, string slug)
         {
             Comment comment = db.Comments.Find(id);
             db.Comments.Remove(comment);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "BlogPosts", new { slug = slug });
         }
 
         protected override void Dispose(bool disposing)

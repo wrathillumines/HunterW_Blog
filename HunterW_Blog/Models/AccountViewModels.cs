@@ -64,6 +64,22 @@ namespace HunterW_Blog.Models
 
     public class RegisterViewModel
     {
+        public string Id { get; set; }
+
+        [MaxLength(30, ErrorMessage = "Name must be less than 30 characters.")]
+        [MinLength(1, ErrorMessage = "First name is required.")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [MaxLength(30, ErrorMessage = "Name must be less than 30 characters.")]
+        [MinLength(1, ErrorMessage = "Last name is required.")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [MaxLength(20, ErrorMessage = "Display name must be less than 20 characters.")]
+        [MinLength(4, ErrorMessage = "Display name must be at least 4 characters.")]
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
